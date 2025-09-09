@@ -45,4 +45,4 @@ jobs:
         run: mkdocs build
 
       - name: Deploy documentación a GitHub Pages
-        run: mkdocs gh-deploy --force
+        run: mkdocs gh-deploy
