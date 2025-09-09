@@ -25,9 +25,9 @@ dependencies = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/MauMau/hatch-lerchs-grossmann#readme"
-Issues = "https://github.com/MauMau/hatch-lerchs-grossmann/issues"
-Source = "https://github.com/MauMau/hatch-lerchs-grossmann"
+Documentation = "https://github.com/Mau-Aravena/py-lerchs-grossmann#readme"
+Issues = "https://github.com/Mau-Aravena/py-lerchs-grossmann/issues"
+Source = "https://github.com/Mau-Aravena/py-lerchs-grossmann"
 
 [tool.hatch.version]
 path = "src/py_lerchs_grossmann/__about__.py"

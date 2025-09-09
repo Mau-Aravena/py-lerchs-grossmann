@@ -18,4 +18,4 @@ pip install py_lerchs_grossmann
 
 ## License
 
-`hatch-lerchs-grossmann` is distributed under the terms of the [BSD-3-Clause](https://spdx.org/licenses/BSD-3-Clause.html) license.
+`py-lerchs-grossmann` is distributed under the terms of the [BSD-3-Clause](https://spdx.org/licenses/BSD-3-Clause.html) license.
