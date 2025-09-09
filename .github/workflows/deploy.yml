@@ -42,7 +42,7 @@ jobs:
         run: hatch publish
 
       - name: Build documentación
-        run: mkdocs build --force
+        run: mkdocs build
 
       - name: Deploy documentación a GitHub Pages
-        run: mkdocs gh-deploy
+        run: mkdocs gh-deploy --force
