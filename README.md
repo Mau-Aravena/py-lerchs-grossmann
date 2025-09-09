@@ -1,7 +1,7 @@
 # hatch-lerchs-grossmann
 
-[![PyPI - Version](https://img.shields.io/pypi/v/hatch-lerchs-grossmann.svg)](https://pypi.org/project/hatch-lerchs-grossmann)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hatch-lerchs-grossmann.svg)](https://pypi.org/project/hatch-lerchs-grossmann)
+[![PyPI - Version](https://img.shields.io/pypi/v/py-lerchs-grossmann.svg)](https://pypi.org/project/py-lerchs-grossmann)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py-lerchs-grossmann.svg)](https://pypi.org/project/py-lerchs-grossmann)
 
 ---
 
@@ -13,7 +13,7 @@
 ## Installation
 
 ```console
-pip install py-lerchs-grossmann
+pip install py_lerchs_grossmann
 ```
 
 ## License
