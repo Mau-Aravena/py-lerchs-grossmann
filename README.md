@@ -1,4 +1,4 @@
-# hatch-lerchs-grossmann
+# py-lerchs-grossmann
 
 [![PyPI - Version](https://img.shields.io/pypi/v/py-lerchs-grossmann.svg)](https://pypi.org/project/py-lerchs-grossmann)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py-lerchs-grossmann.svg)](https://pypi.org/project/py-lerchs-grossmann)
