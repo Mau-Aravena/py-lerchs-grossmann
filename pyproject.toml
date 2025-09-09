@@ -30,7 +30,7 @@ Issues = "https://github.com/MauMau/hatch-lerchs-grossmann/issues"
 Source = "https://github.com/MauMau/hatch-lerchs-grossmann"
 
 [tool.hatch.version]
-path = "src/py-lerchs-grossmann/__about__.py"
+path = "src/py_lerchs_grossmann/__about__.py"
 
 [tool.hatch.envs.types]
 extra-dependencies = [
@@ -50,19 +50,19 @@ dependencies = [
   "ruff",
 ]
 [tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/py-lerchs-grossmann tests}"
+check = "mypy --install-types --non-interactive {args:src/py_lerchs_grossmann tests}"
 
 [tool.coverage.run]
-source_pkgs = ["py-lerchs-grossmann", "tests"]
+source_pkgs = ["py_lerchs_grossmann", "tests"]
 branch = true
 parallel = true
 omit = [
-  "src/py-lerchs-grossmann/__about__.py",
+  "src/py_lerchs_grossmann/__about__.py",
 ]
 
 [tool.coverage.paths]
-py-lerchs-grossmann = ["src/py-lerchs-grossmann", "*/py-lerchs-grossmann/src/py-lerchs-grossmann"]
-tests = ["tests", "*/py-lerchs-grossmann/tests"]
+py_lerchs_grossmann = ["src/py_lerchs_grossmann", "*/py-lerchs-grossmann/src/py_lerchs_grossmann"]
+tests = ["tests", "*/py_lerchs_grossmann/tests"]
 
 [tool.coverage.report]
 exclude_lines = [
