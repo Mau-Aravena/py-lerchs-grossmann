@@ -25,13 +25,6 @@ jobs:
           pipx install hatch
           pip install mkdocs mkdocs-material mkdocstrings[python]
 
-      - name: Incrementar versión (patch)
-        run: hatch version patch
-
-      - name: Obtener versión actual
-        id: version
-        run: echo "VERSION=$(hatch version)" >> $GITHUB_ENV
-
       - name: Build package
         run: hatch build
 
