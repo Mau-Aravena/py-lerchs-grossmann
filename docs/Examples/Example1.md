@@ -27,6 +27,7 @@ The block model must have the following columns: `id` and `value`, for the prope
 The Arc DataFrame is a table that contains the connections or arcs between the blocks. This is because, to mine a block, you must first mine the blocks above it.
 
 ![basic_example_arcs](../img/basic_example_arcs.png)
+
 Following the image, the Arc DataFrame should look like:
 
 | start | end |

@@ -1,17 +1,15 @@
-# Welcome to MkDocs
+# py-lerchs-grossmann
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+**Open-pit optimization using the Lerchs-Grossmann algorithm in Python**
 
-## Commands
+## Overview
 
-- `mkdocs new [dir-name]` - Create a new project.
-- `mkdocs serve` - Start the live-reloading docs server.
-- `mkdocs build` - Build the documentation site.
-- `mkdocs -h` - Print help message and exit.
+`py-lerchs-grossmann` is a Python package designed to apply the classical Lerchs-Grossmann algorithm for open-pit mining optimization. It enables modeling of block graphs and calculation of optimal pits.
 
-## Project layout
+---
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Installation
+
+```bash
+pip install py_lerchs_grossmann
+```
