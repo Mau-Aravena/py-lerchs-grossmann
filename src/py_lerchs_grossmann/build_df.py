@@ -693,8 +693,7 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
         print("df_y_copy")
         print(df_y_copy)
 
-    mask = df_y["id"].isin(df_x["id"])
-    df_return = df_y[mask].reset_index(drop=True)
+    df_return = df_x[df_x["id"] != 0].reset_index(drop=True)
     time_end = time.time()
     print(f"Tiempo de ejecución: {time_end - time_start:.4f} segundos")
 
@@ -719,4 +718,5 @@ if __name__ == "__main__":
         }
     )
 
-    main(df_y, df_arc, True)
+    df_pit = main(df_y, df_arc, True)
+    # df_pit.to_csv("df_pit.csv", index=False)
