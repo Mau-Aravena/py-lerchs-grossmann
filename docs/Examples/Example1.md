@@ -9,17 +9,18 @@ The block model must have the following columns: `id` and `value`, for the prope
 ### Example
 
 ![](../img/basic_example_block_model.png)
-| id | x | y | z | value |
+
+| id  | x   | y   | z   | value |
 | --- | --- | --- | --- | ----- |
-| 1 | 1 | 1 | 3 | -1 |
-| 2 | 2 | 1 | 3 | -1 |
-| 3 | 3 | 1 | 3 | -1 |
-| 4 | 4 | 1 | 3 | -1 |
-| 5 | 5 | 1 | 3 | -1 |
-| 6 | 2 | 1 | 2 | -1 |
-| 7 | 3 | 1 | 2 | -1 |
-| 8 | 4 | 1 | 2 | 3 |
-| 9 | 3 | 1 | 1 | 5 |
+| 1   | 1   | 1   | 3   | -1    |
+| 2   | 2   | 1   | 3   | -1    |
+| 3   | 3   | 1   | 3   | -1    |
+| 4   | 4   | 1   | 3   | -1    |
+| 5   | 5   | 1   | 3   | -1    |
+| 6   | 2   | 1   | 2   | -1    |
+| 7   | 3   | 1   | 2   | -1    |
+| 8   | 4   | 1   | 2   | 3     |
+| 9   | 3   | 1   | 1   | 5     |
 
 ## Arc DataFrame
 
@@ -27,19 +28,20 @@ The Arc DataFrame is a table that contains the connections or arcs between the b
 
 ![basic_example_arcs](../img/basic_example_arcs.png)
 Following the image, the Arc DataFrame should look like:
+
 | start | end |
-|-------|-----|
-| 6 | 1 |
-| 6 | 2 |
-| 6 | 3 |
-| 7 | 2 |
-| 7 | 3 |
-| 7 | 4 |
-| 8 | 3 |
-| 8 | 4 |
-| 8 | 5 |
-| 9 | 6 |
-| 9 | 7 |
+| ----- | --- |
+| 6     | 1   |
+| 6     | 2   |
+| 6     | 3   |
+| 7     | 2   |
+| 7     | 3   |
+| 7     | 4   |
+| 8     | 3   |
+| 8     | 4   |
+| 8     | 5   |
+| 9     | 6   |
+| 9     | 7   |
 
 ## The `main` funtion
 

@@ -3,12 +3,9 @@ site_name: "py-lerchs-grossmann"
 theme:
   name: "material"
 nav:
-  - Inicio: index.md
-  - Ejemplos:
-      - Ejemplo 1: Examples/Example1.md
-  - Documentos extra:
-      - Tutorial: extra_docs/tutorial.md
-      - FAQ: extra_docs/faq.md
+  - Index: index.md
+  - Examples:
+      - Example 1: Examples/Example1.md
   - API: api.md
 
 plugins:
