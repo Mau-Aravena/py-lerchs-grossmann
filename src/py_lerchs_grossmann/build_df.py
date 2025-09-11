@@ -449,6 +449,10 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
     print(f"builded mask time:{time.time()-time_start} seconds")
 
     df_y_copy = df_y_copy[mask].reset_index(drop=True)
+
+    mask = df_y["id"].isin(df_arc["start"]) | df_y["id"].isin(df_arc["end"])
+    df_y = df_y[mask].reset_index(drop=True)
+
     print(f"filtered df_y_copy time:{time.time()-time_start} seconds")
     print(f"Start for len:{len(df_y_copy)}")
     # Creamos df_arc_positive directamente
