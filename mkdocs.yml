@@ -6,6 +6,10 @@ nav:
   - Inicio: index.md
   - Ejemplos:
       - Ejemplo 1: Examples/Example1.md
+  - Documentos extra:
+      - Tutorial: extra_docs/tutorial.md
+      - FAQ: extra_docs/faq.md
+  - API: api.md
 
 plugins:
   - search

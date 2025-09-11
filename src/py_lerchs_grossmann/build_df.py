@@ -431,9 +431,9 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
     Parameters
     ----------
     df_arc : pandas.DataFrame
-        DataFrame containing the arcs between the nodes.
+        DataFrame containing the arcs between the blocks.
     df_y : pandas.DataFrame
-        DataFrame containing the nodes that are not part of the economic envelope.
+        DataFrame containing the data of blocks that are part of the Block Model.
     """
     time_start = time.time()
     df_y_copy = df_y.copy()
@@ -696,7 +696,7 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
     mask = df_y["id"].isin(df_x["id"])
     df_return = df_y[mask].reset_index(drop=True)
     time_end = time.time()
-    print(f"Tiempo de ejecución: {time_end - time_start:.4f} segundos")
+    print(f"Runtime: {time_end - time_start:.4f} seconds")
 
     return df_return
 
