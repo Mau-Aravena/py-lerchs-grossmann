@@ -693,7 +693,8 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
         print("df_y_copy")
         print(df_y_copy)
 
-    df_return = df_x[df_x["id"] != 0].reset_index(drop=True)
+    mask = df_y["id"].isin(df_x["id"])
+    df_return = df_y[mask].reset_index(drop=True)
     time_end = time.time()
     print(f"Tiempo de ejecución: {time_end - time_start:.4f} segundos")
 

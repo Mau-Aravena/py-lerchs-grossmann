@@ -2,6 +2,10 @@ site_name: "py-lerchs-grossmann"
 
 theme:
   name: "material"
+nav:
+  - Inicio: index.md
+  - Ejemplos:
+      - Ejemplo 1: Examples/Example1.md
 
 plugins:
   - search
