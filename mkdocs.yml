@@ -6,6 +6,7 @@ nav:
   - Index: index.md
   - Examples:
       - Example 1: Examples/Example1.md
+      - Example 2: Examples/Example3.md
   - API: api.md
 
 plugins:
