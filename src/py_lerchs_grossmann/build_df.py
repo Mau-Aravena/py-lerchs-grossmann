@@ -3,8 +3,8 @@ import numpy as np
 import time
 
 
-def build_df_arc(df_y_original: pd.DataFrame, block_size: float):
-    df_y = df_y_original.copy()
+def build_df_arc(df_block_model: pd.DataFrame, block_size: float):
+    df_y = df_block_model.copy()
     df_arc = pd.DataFrame({"start": [], "end": []})
     df_surface = pd.DataFrame(
         {
@@ -184,10 +184,12 @@ def build_df_arc_positive():
     return df_arc_positive
 
 
-def filter_possible_arcs(df_arc: pd.DataFrame, df_x: pd.DataFrame, df_y: pd.DataFrame):
+def filter_possible_arcs(
+    df_arc: pd.DataFrame, df_x: pd.DataFrame, df_block_model: pd.DataFrame
+):
     """
     Create a copy of the DataFrame `df_arc`and filtered, keeping only the rows where `df_arc[start]` is in `df_x['id']`
-    and `df_arc[end]` is in `df_y['id']`.
+    and `df_arc[end]` is in `df_block_model['id']`.
 
     Parameters
     ----------
@@ -195,7 +197,7 @@ def filter_possible_arcs(df_arc: pd.DataFrame, df_x: pd.DataFrame, df_y: pd.Data
         DataFrame containing the arcs between the nodes.
     df_x : pandas.DataFrame
         DataFrame with the `id` column used to validate values in `start`.
-    df_y : pandas.DataFrame
+    df_block_model : pandas.DataFrame
         DataFrame with the `id` column used to validate values in `end`.
 
     Returns
@@ -203,10 +205,10 @@ def filter_possible_arcs(df_arc: pd.DataFrame, df_x: pd.DataFrame, df_y: pd.Data
     pandas.DataFrame
         Subset of `df_arc` where both `start` and `end` are valid.
     """
-    valid_stars = df_x["id"]
-    valid_ends = df_y["id"]
+    valid_starts = df_x["id"]
+    valid_ends = df_block_model["id"]
 
-    mask = df_arc["start"].isin(valid_stars) & df_arc["end"].isin(valid_ends)
+    mask = df_arc["start"].isin(valid_starts) & df_arc["end"].isin(valid_ends)
 
     possible_arc = df_arc[mask].reset_index(drop=True)
 
@@ -424,7 +426,7 @@ def classify_type_strength(
     ] = "strong"
 
 
-def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
+def main(df_block_model: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
     """
     Main function that applies all steps of the Lerchs-Grossmann algorithm.
 
@@ -432,11 +434,11 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
     ----------
     df_arc : pandas.DataFrame
         DataFrame containing the arcs between the blocks.
-    df_y : pandas.DataFrame
+    df_block_model : pandas.DataFrame
         DataFrame containing the data of blocks that are part of the Block Model.
     """
     time_start = time.time()
-    df_y_copy = df_y.copy()
+    df_y_copy = df_block_model.copy()
     print(f"builded df_y_copy time:{time.time()-time_start} seconds")
 
     df_x = build_df_x()
@@ -450,8 +452,10 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
 
     df_y_copy = df_y_copy[mask].reset_index(drop=True)
 
-    mask = df_y["id"].isin(df_arc["start"]) | df_y["id"].isin(df_arc["end"])
-    df_y = df_y[mask].reset_index(drop=True)
+    mask = df_block_model["id"].isin(df_arc["start"]) | df_block_model["id"].isin(
+        df_arc["end"]
+    )
+    df_block_model = df_block_model[mask].reset_index(drop=True)
 
     print(f"filtered df_y_copy time:{time.time()-time_start} seconds")
     print(f"Start for len:{len(df_y_copy)}")
@@ -467,10 +471,12 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
     )
 
     # Creamos df_x directamente
-    df_x = pd.concat([df_x, df_y[df_y["value"] > 0]], ignore_index=True)
+    df_x = pd.concat(
+        [df_x, df_block_model[df_block_model["value"] > 0]], ignore_index=True
+    )
 
     # Eliminamos esas filas de df_y_copy
-    df_y_copy = df_y[df_y["value"] <= 0].copy()
+    df_y_copy = df_block_model[df_block_model["value"] <= 0].copy()
 
     counter_cicle = 0
 
@@ -489,11 +495,12 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
             print(df_y_copy)
             break
         counter_cicle += 1
-        if True:
+        if vervose:
             print("\n---------------")
-            print(
-                f"Counter cicle {counter_cicle} -> time cicle {time.time()-time_cicle} seconds"
-            )
+        print(
+            f"Counter cicle {counter_cicle} -> time cicle {time.time()-time_cicle} seconds"
+        )
+        if vervose:
             print("---------------")
             print("possible_arc")
             print(possible_arc)
@@ -546,7 +553,7 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
         # Identify and filter the outermost nodes in `df_arc_direct_tree`
         filtro = ~df_arc_direct_tree["end_tree"].isin(df_arc_direct_tree["start_tree"])
         # Add `value` of the outermost nodes in `df_arc_direct_tree`
-        dict_y_id_value = dict(zip(df_y["id"], df_y["value"]))
+        dict_y_id_value = dict(zip(df_block_model["id"], df_block_model["value"]))
         df_sub = df_arc_direct_tree.loc[filtro]
         values_final = df_sub["end_tree"].map(dict_y_id_value)
         df_arc_direct_tree.loc[filtro, "value"] = values_final
@@ -556,7 +563,7 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
             print(df_arc_direct_tree)
 
         # Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
-        y_values = df_y.set_index("id")["value"].to_dict()
+        y_values = df_block_model.set_index("id")["value"].to_dict()
         while df_arc_direct_tree["value"].isna().any():
             for i, row in df_arc_direct_tree[
                 df_arc_direct_tree["value"].isna()
@@ -573,7 +580,7 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
                 # Sumar valores de los hijos
                 children_sum = children["value"].sum()
 
-                # Buscar valor del nodo destino en df_y
+                # Buscar valor del nodo destino en df_block_model
                 node_value = y_values.get(row["end_tree"], 0)
 
                 # Asignar el valor calculado
@@ -641,12 +648,12 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
                 df_arc_direct_tree["start_tree"]
             )
             # Add `value` of the outermost nodes in `df_arc_direct_tree`
-            dict_y_id_value = dict(zip(df_y["id"], df_y["value"]))
+            dict_y_id_value = dict(zip(df_block_model["id"], df_block_model["value"]))
             df_sub = df_arc_direct_tree.loc[filtro]
             values_final = df_sub["end_tree"].map(dict_y_id_value)
             df_arc_direct_tree.loc[filtro, "value"] = values_final
             # Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
-            y_values = df_y.set_index("id")["value"].to_dict()
+            y_values = df_block_model.set_index("id")["value"].to_dict()
             while df_arc_direct_tree["value"].isna().any():
                 for i, row in df_arc_direct_tree[
                     df_arc_direct_tree["value"].isna()
@@ -663,7 +670,7 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
                     # Sumar valores de los hijos
                     children_sum = children["value"].sum()
 
-                    # Buscar valor del nodo destino en df_y
+                    # Buscar valor del nodo destino en df_block_model
                     node_value = y_values.get(row["end_tree"], 0)
 
                     # Asignar el valor calculado
@@ -682,19 +689,21 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
                 print(df_y_copy)
         mask = ~((df_arc_positive["start_real"] == 0) & (df_arc_positive["value"] <= 0))
         df_arc_direct_tree_x = build_df_arc_direct_tree(df_arc_positive[mask])
-        mask = df_y["id"].isin(df_arc_direct_tree_x["start_tree"]) | df_y["id"].isin(
-            df_arc_direct_tree_x["end_tree"]
-        )
+        mask = df_block_model["id"].isin(
+            df_arc_direct_tree_x["start_tree"]
+        ) | df_block_model["id"].isin(df_arc_direct_tree_x["end_tree"])
         df_x_0 = build_df_x()
-        df_x = pd.concat([df_x_0, df_y[mask].copy()], ignore_index=True)
-        print("df_x")
-        print(df_x)
-        df_y_copy = df_y[~mask].copy()
-        print("df_y_copy")
-        print(df_y_copy)
+        df_x = pd.concat([df_x_0, df_block_model[mask].copy()], ignore_index=True)
+        if vervose:
+            print("df_x")
+            print(df_x)
+        df_y_copy = df_block_model[~mask].copy()
+        if vervose:
+            print("df_y_copy")
+            print(df_y_copy)
 
-    mask = df_y["id"].isin(df_x["id"])
-    df_return = df_y[mask].reset_index(drop=True)
+    mask = df_block_model["id"].isin(df_x["id"])
+    df_return = df_block_model[mask].reset_index(drop=True)
     time_end = time.time()
     print(f"Runtime: {time_end - time_start:.4f} seconds")
 
@@ -702,7 +711,7 @@ def main(df_y: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
 
 
 if __name__ == "__main__":
-    df_y = pd.DataFrame(
+    df_block_model = pd.DataFrame(
         {
             "id": [1, 2, 3, 4, 5, 6, 7, 8, 9],
             "x": [1, 2, 3, 4, 5, 2, 3, 4, 3],
@@ -719,5 +728,5 @@ if __name__ == "__main__":
         }
     )
 
-    df_pit = main(df_y, df_arc, True)
+    df_pit = main(df_block_model, df_arc, True)
     # df_pit.to_csv("df_pit.csv", index=False)
