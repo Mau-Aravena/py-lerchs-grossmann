@@ -426,7 +426,13 @@ def classify_type_strength(
     ] = "strong"
 
 
-def main(df_block_model: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
+def main(
+    df_block_model: pd.DataFrame,
+    df_arc: pd.DataFrame,
+    vervose: bool = True,
+    id: str = "id",
+    value: str = "id",
+):
     """
     Main function that applies all steps of the Lerchs-Grossmann algorithm.
 
@@ -438,52 +444,48 @@ def main(df_block_model: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
         DataFrame containing the data of blocks that are part of the Block Model.
     """
     time_start = time.time()
-    df_y_copy = df_block_model.copy()
-    print(f"builded df_y_copy time:{time.time()-time_start} seconds")
+    mask = df_block_model["id"].isin(df_arc["start"]) | df_block_model["id"].isin(
+        df_arc["end"]
+    )
+    df_block_model = df_block_model[mask].reset_index(drop=True)
+    df = df_block_model[["id", "value"]]
+    df_y = df_block_model[df["value"] < 0].copy()
+    print(f"builded df_y time:{time.time()-time_start} seconds")
 
-    df_x = build_df_x()
+    df_x_0 = build_df_x()
+    df_x = pd.concat([df_x_0, df[df["value"] > 0].copy()], ignore_index=True)
     print(f"builded df_x time:{time.time()-time_start} seconds")
 
     df_arc_positive = build_df_arc_positive()
     print(f"builded df_arc_positive time:{time.time()-time_start} seconds")
 
-    mask = df_y_copy["id"].isin(df_arc["start"]) | df_y_copy["id"].isin(df_arc["end"])
-    print(f"builded mask time:{time.time()-time_start} seconds")
-
-    df_y_copy = df_y_copy[mask].reset_index(drop=True)
-
-    mask = df_block_model["id"].isin(df_arc["start"]) | df_block_model["id"].isin(
-        df_arc["end"]
-    )
-    df_block_model = df_block_model[mask].reset_index(drop=True)
-
-    print(f"filtered df_y_copy time:{time.time()-time_start} seconds")
-    print(f"Start for len:{len(df_y_copy)}")
-    # Creamos df_arc_positive directamente
+    print(f"filtered df_y time:{time.time()-time_start} seconds")
+    print(f"Start for len:{len(df_y)}")
+    # Create df_arc_positive directly
     df_arc_positive = pd.DataFrame(
         {
             "start_real": 0,
-            "end_real": df_y_copy["id"],
-            "value": df_y_copy["value"],
-            "type": np.nan,
-            "strength": np.nan,
+            "end_real": df["id"],
+            "value": df["value"],
+            "type": "NaN",
+            "strength": "NaN",
         }
     )
 
-    # Creamos df_x directamente
+    # Create df_x directly
     df_x = pd.concat(
         [df_x, df_block_model[df_block_model["value"] > 0]], ignore_index=True
     )
 
-    # Eliminamos esas filas de df_y_copy
-    df_y_copy = df_block_model[df_block_model["value"] <= 0].copy()
+    # Filter out rows from df_y with values greater than zero
+    df_y = df_y[df_y["value"] <= 0]
 
     counter_cicle = 0
 
     time_cicle = time.time()
     while True:
-        # Find possible arcs between `df_x` and `df_y_copy`.
-        possible_arc = filter_possible_arcs(df_arc, df_x, df_y_copy)
+        # Find possible arcs between `df_x` and `df_y`.
+        possible_arc = filter_possible_arcs(df_arc, df_x, df_y)
         if len(possible_arc) == 0:
             print("\nAlgoritm completed !!!")
             print("------------------------")
@@ -492,7 +494,7 @@ def main(df_block_model: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
             print("\ndf_x")
             print(df_x)
             print("\ndf_y_copy")
-            print(df_y_copy)
+            print(df_y)
             break
         counter_cicle += 1
         if vervose:
@@ -685,22 +687,21 @@ def main(df_block_model: pd.DataFrame, df_arc: pd.DataFrame, vervose: bool):
                 print(df_arc_positive)
                 print("df_x")
                 print(df_x)
-                print("df_y_copy")
-                print(df_y_copy)
+                print("df_y")
+                print(df_y)
         mask = ~((df_arc_positive["start_real"] == 0) & (df_arc_positive["value"] <= 0))
         df_arc_direct_tree_x = build_df_arc_direct_tree(df_arc_positive[mask])
         mask = df_block_model["id"].isin(
             df_arc_direct_tree_x["start_tree"]
         ) | df_block_model["id"].isin(df_arc_direct_tree_x["end_tree"])
-        df_x_0 = build_df_x()
         df_x = pd.concat([df_x_0, df_block_model[mask].copy()], ignore_index=True)
         if vervose:
             print("df_x")
             print(df_x)
-        df_y_copy = df_block_model[~mask].copy()
+        df_y = df_block_model[~mask].copy()
         if vervose:
-            print("df_y_copy")
-            print(df_y_copy)
+            print("df_y")
+            print(df_y)
 
     mask = df_block_model["id"].isin(df_x["id"])
     df_return = df_block_model[mask].reset_index(drop=True)
@@ -728,5 +729,5 @@ if __name__ == "__main__":
         }
     )
 
-    df_pit = main(df_block_model, df_arc, True)
+    df_pit = main(df_block_model, df_arc, False)
     # df_pit.to_csv("df_pit.csv", index=False)
