@@ -31,14 +31,37 @@ $$
 \cdot \left( \text{volume} \cdot \text{density} \right)
 $$
 
-$$\text{price} = 2.2[USD/lb]$$
-$$\text{credit}_\text{subproducts} = 0.65  [USD/lb]$$
-$$\text{cost}_\text{melting/refine/sell} = 0.66  [USD/lb]$$
-$$\text{metallurgy}_\text{recovery} = 82  [\%]$$
-$$\text{density} = 2.7  [ton/m3]$$
-$$\text{volume} = 10 * 10 * 10  [m3]$$
-$$\text{cost}_\text{mine} = 1.8  [USD/ton]$$
-$$\text{cost}_\text{administration/plant} = 6.5  [USD/ton]$$
+$$
+\text{price} = 2.2[USD/lb]
+$$
+
+$$
+\text{credit}_\text{subproducts} = 0.65  [USD/lb]
+$$
+
+$$
+\text{cost}_\text{melting/refine/sell} = 0.66  [USD/lb]
+$$
+
+$$
+\text{metallurgy}_\text{recovery} = 82  [\%]
+$$
+
+$$
+\text{density} = 2.7  [ton/m^3]
+$$
+
+$$
+\text{volume} = 10 * 10 * 10  [m^3]
+$$
+
+$$
+\text{cost}_\text{mine} = 1.8  [USD/ton]
+$$
+
+$$
+\text{cost}_\text{administration/plant} = 6.5  [USD/ton]
+$$
 
 In Python, using the pandas package looks like this:
 
