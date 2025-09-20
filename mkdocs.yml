@@ -22,3 +22,8 @@ plugins:
             show_source: true
             show_submodules: false
             show_if_no_docstring: false
+markdown_extensions:
+  - mdx_math
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS-MML_HTMLorMML

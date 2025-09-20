@@ -184,12 +184,10 @@ def build_df_arc_positive():
     return df_arc_positive
 
 
-def filter_possible_arcs(
-    df_arc: pd.DataFrame, df_x: pd.DataFrame, df_block_model: pd.DataFrame
-):
+def filter_possible_arcs(df_arc: pd.DataFrame, df_x: pd.DataFrame, df_y: pd.DataFrame):
     """
     Create a copy of the DataFrame `df_arc`and filtered, keeping only the rows where `df_arc[start]` is in `df_x['id']`
-    and `df_arc[end]` is in `df_block_model['id']`.
+    and `df_arc[end]` is in `df_y['id']`.
 
     Parameters
     ----------
@@ -197,7 +195,7 @@ def filter_possible_arcs(
         DataFrame containing the arcs between the nodes.
     df_x : pandas.DataFrame
         DataFrame with the `id` column used to validate values in `start`.
-    df_block_model : pandas.DataFrame
+    df_y : pandas.DataFrame
         DataFrame with the `id` column used to validate values in `end`.
 
     Returns
@@ -206,7 +204,7 @@ def filter_possible_arcs(
         Subset of `df_arc` where both `start` and `end` are valid.
     """
     valid_starts = df_x["id"]
-    valid_ends = df_block_model["id"]
+    valid_ends = df_y["id"]
 
     mask = df_arc["start"].isin(valid_starts) & df_arc["end"].isin(valid_ends)
 
@@ -431,7 +429,7 @@ def main(
     df_arc: pd.DataFrame,
     vervose: bool = True,
     id: str = "id",
-    value: str = "id",
+    value: str = "value",
 ):
     """
     Main function that applies all steps of the Lerchs-Grossmann algorithm.
@@ -448,16 +446,13 @@ def main(
         df_arc["end"]
     )
     df_block_model = df_block_model[mask].reset_index(drop=True)
-    df = df_block_model[["id", "value"]]
-    df_y = df_block_model[df["value"] < 0].copy()
+    df = df_block_model[[id, value]].rename(columns={id: "id", value: "value"})
+    df_y = df[df["value"] < 0].copy()
     print(f"builded df_y time:{time.time()-time_start} seconds")
 
     df_x_0 = build_df_x()
     df_x = pd.concat([df_x_0, df[df["value"] > 0].copy()], ignore_index=True)
     print(f"builded df_x time:{time.time()-time_start} seconds")
-
-    df_arc_positive = build_df_arc_positive()
-    print(f"builded df_arc_positive time:{time.time()-time_start} seconds")
 
     print(f"filtered df_y time:{time.time()-time_start} seconds")
     print(f"Start for len:{len(df_y)}")
@@ -471,6 +466,7 @@ def main(
             "strength": "NaN",
         }
     )
+    print(f"builded df_arc_positive time:{time.time()-time_start} seconds")
 
     # Create df_x directly
     df_x = pd.concat(

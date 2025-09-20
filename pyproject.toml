@@ -43,6 +43,7 @@ dependencies = [
   "mkdocs-material",
   "mkdocstrings",
   "mkdocstrings-python",
+  "python-markdown-math",
 ]
 
 [tool.hatch.envs.dev]
