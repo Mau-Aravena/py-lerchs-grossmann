@@ -143,9 +143,9 @@ def build_df_arc_2d(df_block_model: pd.DataFrame, block_size: float) -> pd.DataF
     for i in sorted(set(df_block_model["z"].to_list()), reverse=True):
         for j in df_block_model[df_block_model["z"] == i].index.tolist():
             mask = (
-                (df_block_model["z"] == df_block_model.loc[j, "z"] + block_size)
-                & (df_block_model["x"] >= df_block_model.loc[j, "x"] - block_size)
-                & (df_block_model["x"] <= df_block_model.loc[j, "x"] + block_size)
+                (df_block_model["z"] == df_block_model.loc[j]["z"] + block_size)
+                & (df_block_model["x"] >= df_block_model.loc[j]["x"] - block_size)
+                & (df_block_model["x"] <= df_block_model.loc[j]["x"] + block_size)
                 & (df_block_model["id"].isin(df_surface["id"]))
             )
             if mask.sum() == 3:
@@ -154,9 +154,9 @@ def build_df_arc_2d(df_block_model: pd.DataFrame, block_size: float) -> pd.DataF
         print(f"segundo i: {i}")
     for i in range(len(df_block_model)):
         mask = (
-            (df_block_model["z"] == df_block_model.loc[i, "z"] + block_size)
-            & (df_block_model["x"] >= df_block_model.loc[i, "x"] - block_size)
-            & (df_block_model["x"] <= df_block_model.loc[i, "x"] + block_size)
+            (df_block_model["z"] == df_block_model.loc[i]["z"] + block_size)
+            & (df_block_model["x"] >= df_block_model.loc[i]["x"] - block_size)
+            & (df_block_model["x"] <= df_block_model.loc[i]["x"] + block_size)
             & (df_block_model["id"].isin(df_surface["id"]))
         )
         if mask.sum() == 3:
