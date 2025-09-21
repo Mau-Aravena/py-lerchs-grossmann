@@ -127,6 +127,53 @@ def build_df_arc(df_block_model: pd.DataFrame, block_size: float):
     return df_arc
 
 
+def build_df_arc_2d(df_block_model: pd.DataFrame, block_size: float) -> pd.DataFrame:
+    df_arc = pd.DataFrame({"start": [], "end": []})
+    df_surface = pd.DataFrame({"id": []})
+    for i in sorted(df_block_model["x"].unique()):
+        df_group = df_block_model[df_block_model["x"] == i]
+        z_max = df_group["z"].max()
+        df_group = df_block_model[
+            (df_block_model["x"] == i) & (df_block_model["z"] == z_max)
+        ].reset_index()
+        nueva_fila = pd.DataFrame({"id": [df_group.loc[0, "id"]]})
+        df_surface = pd.concat([df_surface, nueva_fila], ignore_index=True)
+        print(f"primer i: {i}")
+
+    for i in sorted(set(df_block_model["z"].to_list()), reverse=True):
+        for j in df_block_model[df_block_model["z"] == i].index.tolist():
+            mask = (
+                (df_block_model["z"] == df_block_model.loc[j, "z"] + block_size)
+                & (df_block_model["x"] >= df_block_model.loc[j, "x"] - block_size)
+                & (df_block_model["x"] <= df_block_model.loc[j, "x"] + block_size)
+                & (df_block_model["id"].isin(df_surface["id"]))
+            )
+            if mask.sum() == 3:
+                nueva_fila = pd.DataFrame({"id": [df_block_model.loc[j, "id"]]})
+                df_surface = pd.concat([df_surface, nueva_fila], ignore_index=True)
+        print(f"segundo i: {i}")
+    for i in range(len(df_block_model)):
+        mask = (
+            (df_block_model["z"] == df_block_model.loc[i, "z"] + block_size)
+            & (df_block_model["x"] >= df_block_model.loc[i, "x"] - block_size)
+            & (df_block_model["x"] <= df_block_model.loc[i, "x"] + block_size)
+            & (df_block_model["id"].isin(df_surface["id"]))
+        )
+        if mask.sum() == 3:
+            for end_id in df_block_model[mask]["id"]:
+                df_arc = pd.concat(
+                    [
+                        df_arc,
+                        pd.DataFrame(
+                            {"start": [df_block_model.loc[i, "id"]], "end": [end_id]}
+                        ),
+                    ],
+                    ignore_index=True,
+                )
+        print(f"tercer i: {i}")
+    return df_arc
+
+
 def build_df_x():
     """
     Generates a Pandas DataFrame with the fields id, x, y and value, predefined with a single row of data.

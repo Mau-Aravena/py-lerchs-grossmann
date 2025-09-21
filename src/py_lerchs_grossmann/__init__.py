@@ -11,6 +11,7 @@ from .build_df import (
     build_df_arc_direct_tree,
     Add_value_tree_to_positive,
     classify_type_strength,
+    build_df_arc_2d,
 )
 
 __all__ = [
@@ -23,4 +24,5 @@ __all__ = [
     "build_df_arc_direct_tree",
     "Add_value_tree_to_positive",
     "classify_type_strength",
+    "build_df_arc_2d",
 ]
