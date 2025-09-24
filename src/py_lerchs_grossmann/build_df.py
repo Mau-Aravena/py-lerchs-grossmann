@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import time
+import pyarrow as pa
 
 
 def build_df_arc(df_block_model: pd.DataFrame, block_size: float):
@@ -183,25 +184,19 @@ def build_df_x():
     pandas.DataFrame
         A DataFrame containing one row with the following values:
         - `id`: 0
-        - `x`: numpy.nan
-        - `y`: numpy.nan
-        - `z`: numpy.nan
         - `value`: 0
 
     Examples
     --------
         >>> df_x = build_df_x()
         >>> df_x
-            id  x    y    z   value
-        0    0  NaN  NaN  NaN     0
+            id  value
+        0    0      0
     """
 
     df_x = pd.DataFrame(
         {
             "id": [0],
-            "x": [np.nan],
-            "y": [np.nan],
-            "z": [np.nan],
             "value": [0],
         }
     )
@@ -250,8 +245,9 @@ def filter_possible_arcs(df_arc: pd.DataFrame, df_x: pd.DataFrame, df_y: pd.Data
     pandas.DataFrame
         Subset of `df_arc` where both `start` and `end` are valid.
     """
-    valid_starts = df_x["id"]
-    valid_ends = df_y["id"]
+    # we use sets for faster lookup in large dataframes
+    valid_starts = set(df_x["id"])
+    valid_ends = set(df_y["id"])
 
     mask = df_arc["start"].isin(valid_starts) & df_arc["end"].isin(valid_ends)
 
@@ -278,14 +274,16 @@ def build_find_root(
     pandas.DataFrame
     A DataFrame with a single row representing the root arc of `possible_arc.loc[0]`.
     """
+    # Inicializa find_root con el primer arco
     find_root = pd.DataFrame(
         {
             "start_real": [possible_arc.loc[0]["start"]],
             "end_real": [possible_arc.loc[0]["end"]],
         }
     )
+    # Acumula todos los posibles arcos en una lista
+    root_rows = [find_root]
     while True:
-        added_rows_counter = 0
         mask = (
             (
                 df_arc_positive["start_real"].isin(find_root["start_real"])
@@ -303,12 +301,13 @@ def build_find_root(
             )
         )
         possible_root = df_arc_positive[mask].reset_index(drop=True)
-        added_rows_counter = added_rows_counter + len(possible_root)
-        find_root = pd.concat([find_root, possible_root]).drop_duplicates()
+        if len(possible_root) == 0:
+            break
+        root_rows.append(possible_root)
+        find_root = pd.concat(root_rows, ignore_index=True)
+        find_root = find_root.drop_duplicates()
         mask = (find_root["end_real"].isin(df_x["id"])) & (find_root["start_real"] == 0)
         if len(find_root[mask]) > 0:
-            break
-        if added_rows_counter == 0:
             break
     mask = (find_root["start_real"] == 0) & (find_root["end_real"].isin(df_x["id"]))
     find_root = find_root[mask].reset_index(drop=True)
@@ -329,14 +328,6 @@ def build_df_arc_direct_tree(df_arc_positive: pd.DataFrame):
     pandas.DataFrame
     A DataFrame representing the rebuilt tree structure, ordered from root to outermost nodes.
     """
-    # Create `df_arc_direct_tree`
-    df_arc_direct_tree = pd.DataFrame(
-        {
-            "start_tree": pd.Series(dtype="float"),
-            "end_tree": pd.Series(dtype="float"),
-            "value": pd.Series(dtype="float"),
-        }
-    )
     # Add the arcs with `start_real` == 0 from `df_arc_positive` to `df_arc_direct_tree`
     df_filtered = df_arc_positive[df_arc_positive["start_real"] == 0][
         ["start_real", "end_real"]
@@ -345,12 +336,11 @@ def build_df_arc_direct_tree(df_arc_positive: pd.DataFrame):
         columns={"start_real": "start_tree", "end_real": "end_tree"}
     )
     df_filtered["value"] = np.nan
-    df_arc_direct_tree = pd.concat([df_arc_direct_tree, df_filtered], ignore_index=True)
+    # Create `df_arc_direct_tree`
+    df_arc_direct_tree = df_filtered.reset_index(drop=True)
 
     while True:
-        added_rows_counter = 0
-        # Add the arcs that are connected to `df_arc_direct_tree`, following the tree’s direction
-        mask = df_arc_positive["start_real"].isin(df_arc_direct_tree["end_tree"]) & ~(
+        mask = ~(
             (
                 df_arc_positive["start_real"].isin(df_arc_direct_tree["start_tree"])
                 & df_arc_positive["end_real"].isin(df_arc_direct_tree["end_tree"])
@@ -360,7 +350,18 @@ def build_df_arc_direct_tree(df_arc_positive: pd.DataFrame):
                 & df_arc_positive["start_real"].isin(df_arc_direct_tree["end_tree"])
             )
         )
-        new_rows = df_arc_positive[mask].reset_index(drop=True)
+        df_arc_positive_filtred = df_arc_positive[mask]
+        # Identify the outermost nodes in the current tree structure
+        last_blocks = set(
+            df_arc_direct_tree[
+                ~(df_arc_direct_tree["end_tree"].isin(df_arc_direct_tree["start_tree"]))
+            ]["end_tree"]
+        )
+
+        added_rows_counter = 0
+        # Add the arcs that are connected to `df_arc_direct_tree`, following the tree’s direction
+        mask = df_arc_positive_filtred["start_real"].isin(last_blocks)
+        new_rows = df_arc_positive_filtred[mask].reset_index(drop=True)
         new_rows = new_rows[["start_real", "end_real"]]
         new_rows = new_rows.rename(
             columns={"start_real": "start_tree", "end_real": "end_tree"}
@@ -372,17 +373,8 @@ def build_df_arc_direct_tree(df_arc_positive: pd.DataFrame):
         added_rows_counter = added_rows_counter + len(new_rows)
 
         # Add the arcs that are connected to `df_arc_direct_tree`, not following the tree’s direction.
-        mask = df_arc_positive["end_real"].isin(df_arc_direct_tree["end_tree"]) & ~(
-            (
-                df_arc_positive["end_real"].isin(df_arc_direct_tree["start_tree"])
-                & df_arc_positive["start_real"].isin(df_arc_direct_tree["end_tree"])
-            )
-            | (
-                df_arc_positive["start_real"].isin(df_arc_direct_tree["start_tree"])
-                & df_arc_positive["end_real"].isin(df_arc_direct_tree["end_tree"])
-            )
-        )
-        new_rows = df_arc_positive[mask].reset_index(drop=True)
+        mask = df_arc_positive_filtred["end_real"].isin(last_blocks)
+        new_rows = df_arc_positive_filtred[mask].reset_index(drop=True)
         new_rows = new_rows[["start_real", "end_real"]]
         new_rows = new_rows.rename(
             columns={"start_real": "end_tree", "end_real": "start_tree"}
@@ -446,29 +438,26 @@ def classify_type_strength(
     df_arc_direct_tree:
         A DataFrame representing the rebuilt tree structure, ordered from root to outermost nodes.
     """
-    df_arc_positive["type"] = "m"
-    df_arc_positive.loc[
-        df_arc_positive[["start_real", "end_real"]]
-        .apply(tuple, axis=1)
-        .isin(df_arc_direct_tree[["start_tree", "end_tree"]].apply(tuple, axis=1)),
-        "type",
-    ] = "p"
-    df_arc_positive.loc[
-        (df_arc_positive["type"] == "p") & (df_arc_positive["value"] > 0),
-        "strength",
-    ] = "strong"
-    df_arc_positive.loc[
-        (df_arc_positive["type"] == "p") & (df_arc_positive["value"] <= 0),
-        "strength",
-    ] = "weak"
-    df_arc_positive.loc[
-        (df_arc_positive["type"] == "m") & (df_arc_positive["value"] > 0),
-        "strength",
-    ] = "weak"
-    df_arc_positive.loc[
-        (df_arc_positive["type"] == "m") & (df_arc_positive["value"] <= 0),
-        "strength",
-    ] = "strong"
+    # Optimización: usar sets para comparación rápida
+    tree_pairs = set(
+        zip(df_arc_direct_tree["start_tree"], df_arc_direct_tree["end_tree"])
+    )
+    arc_pairs = list(zip(df_arc_positive["start_real"], df_arc_positive["end_real"]))
+    # Asignar tipo usando comprensión de listas y np.array
+    type_arr = np.array(["p" if pair in tree_pairs else "m" for pair in arc_pairs])
+    df_arc_positive["type"] = type_arr
+    # Asignar strength vectorizado
+    value_arr = df_arc_positive["value"].values.astype(float)
+    strength_arr = np.where(
+        (type_arr == "p") & (value_arr > 0),
+        "strong",
+        np.where(
+            (type_arr == "p") & (value_arr <= 0),
+            "weak",
+            np.where((type_arr == "m") & (value_arr > 0), "weak", "strong"),
+        ),
+    )
+    df_arc_positive["strength"] = strength_arr
 
 
 def main(
@@ -494,6 +483,12 @@ def main(
     )
     df_block_model = df_block_model[mask].reset_index(drop=True)
     df = df_block_model[[id, value]].rename(columns={id: "id", value: "value"})
+    df["id"] = df["id"].astype(int)
+    df["value"] = df["value"].astype(float)
+
+    df_arc["start"] = df_arc["start"].astype(int)
+    df_arc["end"] = df_arc["end"].astype(int)
+
     df_y = df[df["value"] < 0].copy()
     print(f"builded df_y time:{time.time()-time_start} seconds")
 
@@ -514,14 +509,6 @@ def main(
         }
     )
     print(f"builded df_arc_positive time:{time.time()-time_start} seconds")
-
-    # Create df_x directly
-    df_x = pd.concat(
-        [df_x, df_block_model[df_block_model["value"] > 0]], ignore_index=True
-    )
-
-    # Filter out rows from df_y with values greater than zero
-    df_y = df_y[df_y["value"] <= 0]
 
     counter_cicle = 0
 
@@ -596,12 +583,13 @@ def main(
             print(df_arc_direct_tree)
 
         # Identify and filter the outermost nodes in `df_arc_direct_tree`
-        filtro = ~df_arc_direct_tree["end_tree"].isin(df_arc_direct_tree["start_tree"])
-        # Add `value` of the outermost nodes in `df_arc_direct_tree`
+        start_tree_set = set(df_arc_direct_tree["start_tree"])
+        filtro = ~df_arc_direct_tree["end_tree"].isin(start_tree_set)
+        # Optimización: asigna directamente usando .map sobre la columna filtrada
         dict_y_id_value = dict(zip(df_block_model["id"], df_block_model["value"]))
-        df_sub = df_arc_direct_tree.loc[filtro]
-        values_final = df_sub["end_tree"].map(dict_y_id_value)
-        df_arc_direct_tree.loc[filtro, "value"] = values_final
+        df_arc_direct_tree.loc[filtro, "value"] = df_arc_direct_tree.loc[
+            filtro, "end_tree"
+        ].map(dict_y_id_value)
         if vervose:
             print("\nAdd `value` of the outermost nodes in `df_arc_direct_tree`")
             print("df_arc_direct_tree")
@@ -689,14 +677,13 @@ def main(
             df_arc_direct_tree = build_df_arc_direct_tree(df_arc_positive)
 
             # Identify and filter the outermost nodes in `df_arc_direct_tree`
-            filtro = ~df_arc_direct_tree["end_tree"].isin(
-                df_arc_direct_tree["start_tree"]
-            )
-            # Add `value` of the outermost nodes in `df_arc_direct_tree`
+            start_tree_set = set(df_arc_direct_tree["start_tree"])
+            filtro = ~df_arc_direct_tree["end_tree"].isin(start_tree_set)
+            # Optimización: asigna directamente usando .map sobre la columna filtrada
             dict_y_id_value = dict(zip(df_block_model["id"], df_block_model["value"]))
-            df_sub = df_arc_direct_tree.loc[filtro]
-            values_final = df_sub["end_tree"].map(dict_y_id_value)
-            df_arc_direct_tree.loc[filtro, "value"] = values_final
+            df_arc_direct_tree.loc[filtro, "value"] = df_arc_direct_tree.loc[
+                filtro, "end_tree"
+            ].map(dict_y_id_value)
             # Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
             y_values = df_block_model.set_index("id")["value"].to_dict()
             while df_arc_direct_tree["value"].isna().any():
@@ -734,14 +721,16 @@ def main(
                 print(df_y)
         mask = ~((df_arc_positive["start_real"] == 0) & (df_arc_positive["value"] <= 0))
         df_arc_direct_tree_x = build_df_arc_direct_tree(df_arc_positive[mask])
-        mask = df_block_model["id"].isin(
-            df_arc_direct_tree_x["start_tree"]
-        ) | df_block_model["id"].isin(df_arc_direct_tree_x["end_tree"])
-        df_x = pd.concat([df_x_0, df_block_model[mask].copy()], ignore_index=True)
+        # Optimización: usar sets para el filtro y evitar copia innecesaria
+        tree_ids = set(df_arc_direct_tree_x["start_tree"]).union(
+            df_arc_direct_tree_x["end_tree"]
+        )
+        mask = df["id"].isin(tree_ids)
+        df_x = pd.concat([df_x_0, df[mask]], ignore_index=True)
         if vervose:
             print("df_x")
             print(df_x)
-        df_y = df_block_model[~mask].copy()
+        df_y = df[~mask].copy()
         if vervose:
             print("df_y")
             print(df_y)
