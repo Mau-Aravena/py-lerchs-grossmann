@@ -1,0 +1,1976 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../Example3/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
+    
+    
+      
+        <title>Example 1 - py-lerchs-grossmann</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#basic-example" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="py-lerchs-grossmann" class="md-header__button md-logo" aria-label="py-lerchs-grossmann" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            py-lerchs-grossmann
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Example 1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="py-lerchs-grossmann" class="md-nav__button md-logo" aria-label="py-lerchs-grossmann" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    py-lerchs-grossmann
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Example 1
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example 1
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#block-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Block Model
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Block Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arc-dataframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arc DataFrame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-main-funtion" class="md-nav__link">
+    <span class="md-ellipsis">
+      The main funtion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Example3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#block-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Block Model
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Block Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arc-dataframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arc DataFrame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-main-funtion" class="md-nav__link">
+    <span class="md-ellipsis">
+      The main funtion
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="basic-example">Basic Example</h1>
+<p>This is a basic example of how to use the <code>py-lerchs-grossmann</code> package to obtain the optimum pit in a block model.</p>
+<h2 id="block-model">Block Model</h2>
+<p>The block model must have the following columns: <code>id</code> and <code>value</code>, for the proper performance of the package. Other columns or extra data do not affect the performance of the package. In this example, the columns <code>x</code>, <code>y</code>, and <code>z</code> are not used by the algorithm.</p>
+<h3 id="example">Example</h3>
+<p><img alt="" src="../../img/basic_example_block_model.png" /></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>x</th>
+<th>y</th>
+<th>z</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td>1</td>
+<td>3</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>7</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>8</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>9</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<h2 id="arc-dataframe">Arc DataFrame</h2>
+<p>The Arc DataFrame is a table that contains the connections or arcs between the blocks. This is because, to mine a block, you must first mine the blocks above it.</p>
+<p><img alt="basic_example_arcs" src="../../img/basic_example_arcs.png" /></p>
+<p>Following the image, the Arc DataFrame should look like:</p>
+<table>
+<thead>
+<tr>
+<th>start</th>
+<th>end</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>3</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2</td>
+</tr>
+<tr>
+<td>7</td>
+<td>3</td>
+</tr>
+<tr>
+<td>7</td>
+<td>4</td>
+</tr>
+<tr>
+<td>8</td>
+<td>3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>8</td>
+<td>5</td>
+</tr>
+<tr>
+<td>9</td>
+<td>6</td>
+</tr>
+<tr>
+<td>9</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-main-funtion">The <code>main</code> funtion</h2>
+<p>Using the block model with the <code>id</code> and <code>value</code> columns, and the arc DataFrame, the <code>main</code> function executes the Lerchs-Grossmann algorithm.</p>
+<pre><code class="language-python">import pandas as pd
+import py_lerchs_grossmann as plg
+
+# Define block and arc data
+df_y = pd.DataFrame(
+    {
+        &quot;id&quot;: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        &quot;x&quot;: [1, 2, 3, 4, 5, 2, 3, 4, 3],
+        &quot;y&quot;: [1, 1, 1, 1, 1, 1, 1, 1, 1],
+        &quot;z&quot;: [3, 3, 3, 3, 3, 2, 2, 2, 1],
+        &quot;value&quot;: [-1, -1, -1, -1, -1, -1, -1, 3, 5],
+    }
+)
+
+df_arc = pd.DataFrame(
+    {
+        &quot;start&quot;: [6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 9],
+        &quot;end&quot;: [1, 2, 3, 2, 3, 4, 3, 4, 5, 6, 7, 8],
+    }
+)
+
+df_pit = main(df_y, df_arc, True)
+</code></pre>
+<p>If the argument <code>verbose=True</code>, the function will print each step of the algorithm in the terminal.</p>
+<pre><code class="language-Terminal">builded df_y_copy time:0.0 seconds
+builded df_x time:0.0010006427764892578 seconds
+builded df_arc_positive time:0.0022470951080322266 seconds
+builded mask time:0.0022470951080322266 seconds
+filtered df_y_copy time:0.0022470951080322266 seconds
+Start for len:9
+
+---------------
+Counter cicle 1 -&gt; time cicle 0.0 seconds
+---------------
+possible_arc
+   start  end
+0      8    3
+1      8    4
+2      8    5
+3      9    6
+4      9    7
+df_arc_positive
+   start_real  end_real  value  type  strength
+0           0         1     -1   NaN       NaN
+1           0         2     -1   NaN       NaN
+2           0         3     -1   NaN       NaN
+3           0         4     -1   NaN       NaN
+4           0         5     -1   NaN       NaN
+5           0         6     -1   NaN       NaN
+6           0         7     -1   NaN       NaN
+7           0         8      3   NaN       NaN
+8           0         9      5   NaN       NaN
+
+Find the root, the arc from X₀ to Xₘ
+Root
+start_real      0
+end_real        8
+value         NaN
+type          NaN
+strength      NaN
+Name: 0, dtype: object
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         3    NaN  NaN      NaN
+3           0         4    NaN  NaN      NaN
+4           0         5    NaN  NaN      NaN
+5           0         6    NaN  NaN      NaN
+6           0         7    NaN  NaN      NaN
+7           0         9    NaN  NaN      NaN
+
+Add the arc from Xₖ to Xₗ
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         3    NaN  NaN      NaN
+3           0         4    NaN  NaN      NaN
+4           0         5    NaN  NaN      NaN
+5           0         6    NaN  NaN      NaN
+6           0         7    NaN  NaN      NaN
+7           0         9    NaN  NaN      NaN
+8           8         3    NaN  NaN      NaN
+
+Create `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0    NaN
+1         0.0       2.0    NaN
+2         0.0       3.0    NaN
+3         0.0       4.0    NaN
+4         0.0       5.0    NaN
+5         0.0       6.0    NaN
+6         0.0       7.0    NaN
+7         0.0       9.0    NaN
+8         3.0       8.0    NaN
+
+Add `value` of the outermost nodes in `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0   -1.0
+1         0.0       2.0   -1.0
+2         0.0       3.0    NaN
+3         0.0       4.0   -1.0
+4         0.0       5.0   -1.0
+5         0.0       6.0   -1.0
+6         0.0       7.0   -1.0
+7         0.0       9.0    5.0
+8         3.0       8.0    3.0
+
+Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0   -1.0
+1         0.0       2.0   -1.0
+2         0.0       3.0    2.0
+3         0.0       4.0   -1.0
+4         0.0       5.0   -1.0
+5         0.0       6.0   -1.0
+6         0.0       7.0   -1.0
+7         0.0       9.0    5.0
+8         3.0       8.0    3.0
+
+Add `values` from `df_arc_direct_tree` to `df_arc_positive`
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0  NaN      NaN
+1           0         2   -1.0  NaN      NaN
+2           0         3    2.0  NaN      NaN
+3           0         4   -1.0  NaN      NaN
+4           0         5   -1.0  NaN      NaN
+5           0         6   -1.0  NaN      NaN
+6           0         7   -1.0  NaN      NaN
+7           0         9    5.0  NaN      NaN
+8           8         3    3.0  NaN      NaN
+
+Compare `df_positive` and `df_arc_direct_tree` to classify the arcs in type (`p` or `m`) and the strength in (`strong` or `weak`)
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0    p     weak
+1           0         2   -1.0    p     weak
+2           0         3    2.0    p   strong
+3           0         4   -1.0    p     weak
+4           0         5   -1.0    p     weak
+5           0         6   -1.0    p     weak
+6           0         7   -1.0    p     weak
+7           0         9    5.0    p   strong
+8           8         3    3.0    m     weak
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   3  3.0  1.0  3.0     -1
+2   8  4.0  1.0  2.0      3
+3   9  3.0  1.0  1.0      5
+df_y_copy
+   id  x  y  z  value
+0   1  1  1  3     -1
+1   2  2  1  3     -1
+3   4  4  1  3     -1
+4   5  5  1  3     -1
+5   6  2  1  2     -1
+6   7  3  1  2     -1
+
+---------------
+Counter cicle 2 -&gt; time cicle 0.06424283981323242 seconds
+---------------
+possible_arc
+   start  end
+0      8    4
+1      8    5
+2      9    6
+3      9    7
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0    p     weak
+1           0         2   -1.0    p     weak
+2           0         3    2.0    p   strong
+3           0         4   -1.0    p     weak
+4           0         5   -1.0    p     weak
+5           0         6   -1.0    p     weak
+6           0         7   -1.0    p     weak
+7           0         9    5.0    p   strong
+8           8         3    3.0    m     weak
+
+Find the root, the arc from X₀ to Xₘ
+Root
+start_real      0
+end_real        3
+value         NaN
+type          NaN
+strength      NaN
+Name: 0, dtype: object
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         4    NaN  NaN      NaN
+3           0         5    NaN  NaN      NaN
+4           0         6    NaN  NaN      NaN
+5           0         7    NaN  NaN      NaN
+6           0         9    NaN  NaN      NaN
+7           8         3    NaN  NaN      NaN
+
+Add the arc from Xₖ to Xₗ
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         4    NaN  NaN      NaN
+3           0         5    NaN  NaN      NaN
+4           0         6    NaN  NaN      NaN
+5           0         7    NaN  NaN      NaN
+6           0         9    NaN  NaN      NaN
+7           8         3    NaN  NaN      NaN
+8           8         4    NaN  NaN      NaN
+
+Create `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0    NaN
+1         0.0       2.0    NaN
+2         0.0       4.0    NaN
+3         0.0       5.0    NaN
+4         0.0       6.0    NaN
+5         0.0       7.0    NaN
+6         0.0       9.0    NaN
+7         4.0       8.0    NaN
+8         8.0       3.0    NaN
+
+Add `value` of the outermost nodes in `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0   -1.0
+1         0.0       2.0   -1.0
+2         0.0       4.0    NaN
+3         0.0       5.0   -1.0
+4         0.0       6.0   -1.0
+5         0.0       7.0   -1.0
+6         0.0       9.0    5.0
+7         4.0       8.0    NaN
+8         8.0       3.0   -1.0
+
+Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0   -1.0
+1         0.0       2.0   -1.0
+2         0.0       4.0    1.0
+3         0.0       5.0   -1.0
+4         0.0       6.0   -1.0
+5         0.0       7.0   -1.0
+6         0.0       9.0    5.0
+7         4.0       8.0    2.0
+8         8.0       3.0   -1.0
+
+Add `values` from `df_arc_direct_tree` to `df_arc_positive`
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0  NaN      NaN
+1           0         2   -1.0  NaN      NaN
+2           0         4    1.0  NaN      NaN
+3           0         5   -1.0  NaN      NaN
+4           0         6   -1.0  NaN      NaN
+5           0         7   -1.0  NaN      NaN
+6           0         9    5.0  NaN      NaN
+7           8         3   -1.0  NaN      NaN
+8           8         4    2.0  NaN      NaN
+
+Compare `df_positive` and `df_arc_direct_tree` to classify the arcs in type (`p` or `m`) and the strength in (`strong` or `weak`)
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0    p     weak
+1           0         2   -1.0    p     weak
+2           0         4    1.0    p   strong
+3           0         5   -1.0    p     weak
+4           0         6   -1.0    p     weak
+5           0         7   -1.0    p     weak
+6           0         9    5.0    p   strong
+7           8         3   -1.0    p     weak
+8           8         4    2.0    m     weak
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   3  3.0  1.0  3.0     -1
+2   4  4.0  1.0  3.0     -1
+3   8  4.0  1.0  2.0      3
+4   9  3.0  1.0  1.0      5
+df_y_copy
+   id  x  y  z  value
+0   1  1  1  3     -1
+1   2  2  1  3     -1
+4   5  5  1  3     -1
+5   6  2  1  2     -1
+6   7  3  1  2     -1
+
+---------------
+Counter cicle 3 -&gt; time cicle 0.07159423828125 seconds
+---------------
+possible_arc
+   start  end
+0      8    5
+1      9    6
+2      9    7
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0    p     weak
+1           0         2   -1.0    p     weak
+2           0         4    1.0    p   strong
+3           0         5   -1.0    p     weak
+4           0         6   -1.0    p     weak
+5           0         7   -1.0    p     weak
+6           0         9    5.0    p   strong
+7           8         3   -1.0    p     weak
+8           8         4    2.0    m     weak
+
+Find the root, the arc from X₀ to Xₘ
+Root
+start_real      0
+end_real        4
+value         NaN
+type          NaN
+strength      NaN
+Name: 0, dtype: object
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         5    NaN  NaN      NaN
+3           0         6    NaN  NaN      NaN
+4           0         7    NaN  NaN      NaN
+5           0         9    NaN  NaN      NaN
+6           8         3    NaN  NaN      NaN
+7           8         4    NaN  NaN      NaN
+
+Add the arc from Xₖ to Xₗ
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         5    NaN  NaN      NaN
+3           0         6    NaN  NaN      NaN
+4           0         7    NaN  NaN      NaN
+5           0         9    NaN  NaN      NaN
+6           8         3    NaN  NaN      NaN
+7           8         4    NaN  NaN      NaN
+8           8         5    NaN  NaN      NaN
+
+Create `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0    NaN
+1         0.0       2.0    NaN
+2         0.0       5.0    NaN
+3         0.0       6.0    NaN
+4         0.0       7.0    NaN
+5         0.0       9.0    NaN
+6         5.0       8.0    NaN
+7         8.0       3.0    NaN
+8         8.0       4.0    NaN
+
+Add `value` of the outermost nodes in `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0   -1.0
+1         0.0       2.0   -1.0
+2         0.0       5.0    NaN
+3         0.0       6.0   -1.0
+4         0.0       7.0   -1.0
+5         0.0       9.0    5.0
+6         5.0       8.0    NaN
+7         8.0       3.0   -1.0
+8         8.0       4.0   -1.0
+
+Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0   -1.0
+1         0.0       2.0   -1.0
+2         0.0       5.0    0.0
+3         0.0       6.0   -1.0
+4         0.0       7.0   -1.0
+5         0.0       9.0    5.0
+6         5.0       8.0    1.0
+7         8.0       3.0   -1.0
+8         8.0       4.0   -1.0
+
+Add `values` from `df_arc_direct_tree` to `df_arc_positive`
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0  NaN      NaN
+1           0         2   -1.0  NaN      NaN
+2           0         5    0.0  NaN      NaN
+3           0         6   -1.0  NaN      NaN
+4           0         7   -1.0  NaN      NaN
+5           0         9    5.0  NaN      NaN
+6           8         3   -1.0  NaN      NaN
+7           8         4   -1.0  NaN      NaN
+8           8         5    1.0  NaN      NaN
+
+Compare `df_positive` and `df_arc_direct_tree` to classify the arcs in type (`p` or `m`) and the strength in (`strong` or `weak`)
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0    p     weak
+1           0         2   -1.0    p     weak
+2           0         5    0.0    p     weak
+3           0         6   -1.0    p     weak
+4           0         7   -1.0    p     weak
+5           0         9    5.0    p   strong
+6           8         3   -1.0    p     weak
+7           8         4   -1.0    p     weak
+8           8         5    1.0    m     weak
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   9  3.0  1.0  1.0      5
+df_y_copy
+   id  x  y  z  value
+0   1  1  1  3     -1
+1   2  2  1  3     -1
+2   3  3  1  3     -1
+3   4  4  1  3     -1
+4   5  5  1  3     -1
+5   6  2  1  2     -1
+6   7  3  1  2     -1
+7   8  4  1  2      3
+
+---------------
+Counter cicle 4 -&gt; time cicle 0.07389569282531738 seconds
+---------------
+possible_arc
+   start  end
+0      9    6
+1      9    7
+2      9    8
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0    p     weak
+1           0         2   -1.0    p     weak
+2           0         5    0.0    p     weak
+3           0         6   -1.0    p     weak
+4           0         7   -1.0    p     weak
+5           0         9    5.0    p   strong
+6           8         3   -1.0    p     weak
+7           8         4   -1.0    p     weak
+8           8         5    1.0    m     weak
+
+Find the root, the arc from X₀ to Xₘ
+Root
+start_real      0
+end_real        9
+value         NaN
+type          NaN
+strength      NaN
+Name: 0, dtype: object
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         5    NaN  NaN      NaN
+3           0         6    NaN  NaN      NaN
+4           0         7    NaN  NaN      NaN
+5           8         3    NaN  NaN      NaN
+6           8         4    NaN  NaN      NaN
+7           8         5    NaN  NaN      NaN
+
+Add the arc from Xₖ to Xₗ
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         5    NaN  NaN      NaN
+3           0         6    NaN  NaN      NaN
+4           0         7    NaN  NaN      NaN
+5           8         3    NaN  NaN      NaN
+6           8         4    NaN  NaN      NaN
+7           8         5    NaN  NaN      NaN
+8           9         6    NaN  NaN      NaN
+
+Create `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0    NaN
+1         0.0       2.0    NaN
+2         0.0       5.0    NaN
+3         0.0       6.0    NaN
+4         0.0       7.0    NaN
+5         5.0       8.0    NaN
+6         6.0       9.0    NaN
+7         8.0       3.0    NaN
+8         8.0       4.0    NaN
+
+Add `value` of the outermost nodes in `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0   -1.0
+1         0.0       2.0   -1.0
+2         0.0       5.0    NaN
+3         0.0       6.0    NaN
+4         0.0       7.0   -1.0
+5         5.0       8.0    NaN
+6         6.0       9.0    5.0
+7         8.0       3.0   -1.0
+8         8.0       4.0   -1.0
+
+Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0   -1.0
+1         0.0       2.0   -1.0
+2         0.0       5.0    0.0
+3         0.0       6.0    4.0
+4         0.0       7.0   -1.0
+5         5.0       8.0    1.0
+6         6.0       9.0    5.0
+7         8.0       3.0   -1.0
+8         8.0       4.0   -1.0
+
+Add `values` from `df_arc_direct_tree` to `df_arc_positive`
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0  NaN      NaN
+1           0         2   -1.0  NaN      NaN
+2           0         5    0.0  NaN      NaN
+3           0         6    4.0  NaN      NaN
+4           0         7   -1.0  NaN      NaN
+5           8         3   -1.0  NaN      NaN
+6           8         4   -1.0  NaN      NaN
+7           8         5    1.0  NaN      NaN
+8           9         6    5.0  NaN      NaN
+
+Compare `df_positive` and `df_arc_direct_tree` to classify the arcs in type (`p` or `m`) and the strength in (`strong` or `weak`)
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0    p     weak
+1           0         2   -1.0    p     weak
+2           0         5    0.0    p     weak
+3           0         6    4.0    p   strong
+4           0         7   -1.0    p     weak
+5           8         3   -1.0    p     weak
+6           8         4   -1.0    p     weak
+7           8         5    1.0    m     weak
+8           9         6    5.0    m     weak
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   6  2.0  1.0  2.0     -1
+2   9  3.0  1.0  1.0      5
+df_y_copy
+   id  x  y  z  value
+0   1  1  1  3     -1
+1   2  2  1  3     -1
+2   3  3  1  3     -1
+3   4  4  1  3     -1
+4   5  5  1  3     -1
+6   7  3  1  2     -1
+7   8  4  1  2      3
+
+---------------
+Counter cicle 5 -&gt; time cicle 0.06777811050415039 seconds
+---------------
+possible_arc
+   start  end
+0      6    1
+1      6    2
+2      6    3
+3      9    7
+4      9    8
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1   -1.0    p     weak
+1           0         2   -1.0    p     weak
+2           0         5    0.0    p     weak
+3           0         6    4.0    p   strong
+4           0         7   -1.0    p     weak
+5           8         3   -1.0    p     weak
+6           8         4   -1.0    p     weak
+7           8         5    1.0    m     weak
+8           9         6    5.0    m     weak
+
+Find the root, the arc from X₀ to Xₘ
+Root
+start_real      0
+end_real        6
+value         NaN
+type          NaN
+strength      NaN
+Name: 0, dtype: object
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         5    NaN  NaN      NaN
+3           0         7    NaN  NaN      NaN
+4           8         3    NaN  NaN      NaN
+5           8         4    NaN  NaN      NaN
+6           8         5    NaN  NaN      NaN
+7           9         6    NaN  NaN      NaN
+
+Add the arc from Xₖ to Xₗ
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    NaN  NaN      NaN
+1           0         2    NaN  NaN      NaN
+2           0         5    NaN  NaN      NaN
+3           0         7    NaN  NaN      NaN
+4           8         3    NaN  NaN      NaN
+5           8         4    NaN  NaN      NaN
+6           8         5    NaN  NaN      NaN
+7           9         6    NaN  NaN      NaN
+8           6         1    NaN  NaN      NaN
+
+Create `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0    NaN
+1         0.0       2.0    NaN
+2         0.0       5.0    NaN
+3         0.0       7.0    NaN
+4         5.0       8.0    NaN
+5         1.0       6.0    NaN
+6         8.0       3.0    NaN
+7         8.0       4.0    NaN
+8         6.0       9.0    NaN
+
+Add `value` of the outermost nodes in `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0    NaN
+1         0.0       2.0   -1.0
+2         0.0       5.0    NaN
+3         0.0       7.0   -1.0
+4         5.0       8.0    NaN
+5         1.0       6.0    NaN
+6         8.0       3.0   -1.0
+7         8.0       4.0   -1.0
+8         6.0       9.0    5.0
+
+Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       1.0    3.0
+1         0.0       2.0   -1.0
+2         0.0       5.0    0.0
+3         0.0       7.0   -1.0
+4         5.0       8.0    1.0
+5         1.0       6.0    4.0
+6         8.0       3.0   -1.0
+7         8.0       4.0   -1.0
+8         6.0       9.0    5.0
+
+Add `values` from `df_arc_direct_tree` to `df_arc_positive`
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    3.0  NaN      NaN
+1           0         2   -1.0  NaN      NaN
+2           0         5    0.0  NaN      NaN
+3           0         7   -1.0  NaN      NaN
+4           8         3   -1.0  NaN      NaN
+5           8         4   -1.0  NaN      NaN
+6           8         5    1.0  NaN      NaN
+7           9         6    5.0  NaN      NaN
+8           6         1    4.0  NaN      NaN
+
+Compare `df_positive` and `df_arc_direct_tree` to classify the arcs in type (`p` or `m`) and the strength in (`strong` or `weak`)
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    3.0    p   strong
+1           0         2   -1.0    p     weak
+2           0         5    0.0    p     weak
+3           0         7   -1.0    p     weak
+4           8         3   -1.0    p     weak
+5           8         4   -1.0    p     weak
+6           8         5    1.0    m     weak
+7           9         6    5.0    m     weak
+8           6         1    4.0    m     weak
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   1  1.0  1.0  3.0     -1
+2   6  2.0  1.0  2.0     -1
+3   9  3.0  1.0  1.0      5
+df_y_copy
+   id  x  y  z  value
+1   2  2  1  3     -1
+2   3  3  1  3     -1
+3   4  4  1  3     -1
+4   5  5  1  3     -1
+6   7  3  1  2     -1
+7   8  4  1  2      3
+
+---------------
+Counter cicle 6 -&gt; time cicle 0.06540465354919434 seconds
+---------------
+possible_arc
+   start  end
+0      6    2
+1      6    3
+2      9    7
+3      9    8
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         1    3.0    p   strong
+1           0         2   -1.0    p     weak
+2           0         5    0.0    p     weak
+3           0         7   -1.0    p     weak
+4           8         3   -1.0    p     weak
+5           8         4   -1.0    p     weak
+6           8         5    1.0    m     weak
+7           9         6    5.0    m     weak
+8           6         1    4.0    m     weak
+
+Find the root, the arc from X₀ to Xₘ
+Root
+start_real      0
+end_real        1
+value         NaN
+type          NaN
+strength      NaN
+Name: 0, dtype: object
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         2    NaN  NaN      NaN
+1           0         5    NaN  NaN      NaN
+2           0         7    NaN  NaN      NaN
+3           8         3    NaN  NaN      NaN
+4           8         4    NaN  NaN      NaN
+5           8         5    NaN  NaN      NaN
+6           9         6    NaN  NaN      NaN
+7           6         1    NaN  NaN      NaN
+
+Add the arc from Xₖ to Xₗ
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         2    NaN  NaN      NaN
+1           0         5    NaN  NaN      NaN
+2           0         7    NaN  NaN      NaN
+3           8         3    NaN  NaN      NaN
+4           8         4    NaN  NaN      NaN
+5           8         5    NaN  NaN      NaN
+6           9         6    NaN  NaN      NaN
+7           6         1    NaN  NaN      NaN
+8           6         2    NaN  NaN      NaN
+
+Create `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       2.0    NaN
+1         0.0       5.0    NaN
+2         0.0       7.0    NaN
+3         5.0       8.0    NaN
+4         2.0       6.0    NaN
+5         8.0       3.0    NaN
+6         8.0       4.0    NaN
+7         6.0       1.0    NaN
+8         6.0       9.0    NaN
+
+Add `value` of the outermost nodes in `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       2.0    NaN
+1         0.0       5.0    NaN
+2         0.0       7.0   -1.0
+3         5.0       8.0    NaN
+4         2.0       6.0    NaN
+5         8.0       3.0   -1.0
+6         8.0       4.0   -1.0
+7         6.0       1.0   -1.0
+8         6.0       9.0    5.0
+
+Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       2.0    2.0
+1         0.0       5.0    0.0
+2         0.0       7.0   -1.0
+3         5.0       8.0    1.0
+4         2.0       6.0    3.0
+5         8.0       3.0   -1.0
+6         8.0       4.0   -1.0
+7         6.0       1.0   -1.0
+8         6.0       9.0    5.0
+
+Add `values` from `df_arc_direct_tree` to `df_arc_positive`
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         2    2.0  NaN      NaN
+1           0         5    0.0  NaN      NaN
+2           0         7   -1.0  NaN      NaN
+3           8         3   -1.0  NaN      NaN
+4           8         4   -1.0  NaN      NaN
+5           8         5    1.0  NaN      NaN
+6           9         6    5.0  NaN      NaN
+7           6         1   -1.0  NaN      NaN
+8           6         2    3.0  NaN      NaN
+
+Compare `df_positive` and `df_arc_direct_tree` to classify the arcs in type (`p` or `m`) and the strength in (`strong` or `weak`)
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         2    2.0    p   strong
+1           0         5    0.0    p     weak
+2           0         7   -1.0    p     weak
+3           8         3   -1.0    p     weak
+4           8         4   -1.0    p     weak
+5           8         5    1.0    m     weak
+6           9         6    5.0    m     weak
+7           6         1   -1.0    p     weak
+8           6         2    3.0    m     weak
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   1  1.0  1.0  3.0     -1
+2   2  2.0  1.0  3.0     -1
+3   6  2.0  1.0  2.0     -1
+4   9  3.0  1.0  1.0      5
+df_y_copy
+   id  x  y  z  value
+2   3  3  1  3     -1
+3   4  4  1  3     -1
+4   5  5  1  3     -1
+6   7  3  1  2     -1
+7   8  4  1  2      3
+
+---------------
+Counter cicle 7 -&gt; time cicle 0.07021951675415039 seconds
+---------------
+possible_arc
+   start  end
+0      6    3
+1      9    7
+2      9    8
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         2    2.0    p   strong
+1           0         5    0.0    p     weak
+2           0         7   -1.0    p     weak
+3           8         3   -1.0    p     weak
+4           8         4   -1.0    p     weak
+5           8         5    1.0    m     weak
+6           9         6    5.0    m     weak
+7           6         1   -1.0    p     weak
+8           6         2    3.0    m     weak
+
+Find the root, the arc from X₀ to Xₘ
+Root
+start_real      0
+end_real        2
+value         NaN
+type          NaN
+strength      NaN
+Name: 0, dtype: object
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    NaN  NaN      NaN
+1           0         7    NaN  NaN      NaN
+2           8         3    NaN  NaN      NaN
+3           8         4    NaN  NaN      NaN
+4           8         5    NaN  NaN      NaN
+5           9         6    NaN  NaN      NaN
+6           6         1    NaN  NaN      NaN
+7           6         2    NaN  NaN      NaN
+
+Add the arc from Xₖ to Xₗ
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    NaN  NaN      NaN
+1           0         7    NaN  NaN      NaN
+2           8         3    NaN  NaN      NaN
+3           8         4    NaN  NaN      NaN
+4           8         5    NaN  NaN      NaN
+5           9         6    NaN  NaN      NaN
+6           6         1    NaN  NaN      NaN
+7           6         2    NaN  NaN      NaN
+8           6         3    NaN  NaN      NaN
+
+Create `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       5.0    NaN
+1         0.0       7.0    NaN
+2         5.0       8.0    NaN
+3         8.0       3.0    NaN
+4         8.0       4.0    NaN
+5         3.0       6.0    NaN
+6         6.0       1.0    NaN
+7         6.0       2.0    NaN
+8         6.0       9.0    NaN
+
+Add `value` of the outermost nodes in `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       5.0    NaN
+1         0.0       7.0   -1.0
+2         5.0       8.0    NaN
+3         8.0       3.0    NaN
+4         8.0       4.0   -1.0
+5         3.0       6.0    NaN
+6         6.0       1.0   -1.0
+7         6.0       2.0   -1.0
+8         6.0       9.0    5.0
+
+Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       5.0    2.0
+1         0.0       7.0   -1.0
+2         5.0       8.0    3.0
+3         8.0       3.0    1.0
+4         8.0       4.0   -1.0
+5         3.0       6.0    2.0
+6         6.0       1.0   -1.0
+7         6.0       2.0   -1.0
+8         6.0       9.0    5.0
+
+Add `values` from `df_arc_direct_tree` to `df_arc_positive`
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    2.0  NaN      NaN
+1           0         7   -1.0  NaN      NaN
+2           8         3    1.0  NaN      NaN
+3           8         4   -1.0  NaN      NaN
+4           8         5    3.0  NaN      NaN
+5           9         6    5.0  NaN      NaN
+6           6         1   -1.0  NaN      NaN
+7           6         2   -1.0  NaN      NaN
+8           6         3    2.0  NaN      NaN
+
+Compare `df_positive` and `df_arc_direct_tree` to classify the arcs in type (`p` or `m`) and the strength in (`strong` or `weak`)
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    2.0    p   strong
+1           0         7   -1.0    p     weak
+2           8         3    1.0    p   strong
+3           8         4   -1.0    p     weak
+4           8         5    3.0    m     weak
+5           9         6    5.0    m     weak
+6           6         1   -1.0    p     weak
+7           6         2   -1.0    p     weak
+8           6         3    2.0    m     weak
+
+If there is a `strong` arc and `start_real` is not 0, a new arc is added with `start_real` set to 0 and the same end_real. The original arc is removed.
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    1.0    p   strong
+1           0         7   -1.0    p     weak
+2           0         3    1.0    p   strong
+3           8         4   -1.0    p     weak
+4           8         5    2.0    m     weak
+5           9         6    5.0    m     weak
+6           6         1   -1.0    p     weak
+7           6         2   -1.0    p     weak
+8           6         3    2.0    m     weak
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   1  1.0  1.0  3.0     -1
+2   2  2.0  1.0  3.0     -1
+3   6  2.0  1.0  2.0     -1
+4   9  3.0  1.0  1.0      5
+df_y_copy
+   id  x  y  z  value
+2   3  3  1  3     -1
+3   4  4  1  3     -1
+4   5  5  1  3     -1
+6   7  3  1  2     -1
+7   8  4  1  2      3
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   1  1.0  1.0  3.0     -1
+2   2  2.0  1.0  3.0     -1
+3   3  3.0  1.0  3.0     -1
+4   4  4.0  1.0  3.0     -1
+5   5  5.0  1.0  3.0     -1
+6   6  2.0  1.0  2.0     -1
+7   8  4.0  1.0  2.0      3
+8   9  3.0  1.0  1.0      5
+df_y_copy
+   id  x  y  z  value
+6   7  3  1  2     -1
+
+---------------
+Counter cicle 8 -&gt; time cicle 0.10406661033630371 seconds
+---------------
+possible_arc
+   start  end
+0      9    7
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    1.0    p   strong
+1           0         7   -1.0    p     weak
+2           0         3    1.0    p   strong
+3           8         4   -1.0    p     weak
+4           8         5    2.0    m     weak
+5           9         6    5.0    m     weak
+6           6         1   -1.0    p     weak
+7           6         2   -1.0    p     weak
+8           6         3    2.0    m     weak
+
+Find the root, the arc from X₀ to Xₘ
+Root
+start_real      0
+end_real        3
+value         NaN
+type          NaN
+strength      NaN
+Name: 0, dtype: object
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    NaN  NaN      NaN
+1           0         7    NaN  NaN      NaN
+2           8         4    NaN  NaN      NaN
+3           8         5    NaN  NaN      NaN
+4           9         6    NaN  NaN      NaN
+5           6         1    NaN  NaN      NaN
+6           6         2    NaN  NaN      NaN
+7           6         3    NaN  NaN      NaN
+
+Add the arc from Xₖ to Xₗ
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    NaN  NaN      NaN
+1           0         7    NaN  NaN      NaN
+2           8         4    NaN  NaN      NaN
+3           8         5    NaN  NaN      NaN
+4           9         6    NaN  NaN      NaN
+5           6         1    NaN  NaN      NaN
+6           6         2    NaN  NaN      NaN
+7           6         3    NaN  NaN      NaN
+8           9         7    NaN  NaN      NaN
+
+Create `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       5.0    NaN
+1         0.0       7.0    NaN
+2         5.0       8.0    NaN
+3         7.0       9.0    NaN
+4         8.0       4.0    NaN
+5         9.0       6.0    NaN
+6         6.0       1.0    NaN
+7         6.0       2.0    NaN
+8         6.0       3.0    NaN
+
+Add `value` of the outermost nodes in `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       5.0    NaN
+1         0.0       7.0    NaN
+2         5.0       8.0    NaN
+3         7.0       9.0    NaN
+4         8.0       4.0   -1.0
+5         9.0       6.0    NaN
+6         6.0       1.0   -1.0
+7         6.0       2.0   -1.0
+8         6.0       3.0   -1.0
+
+Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       5.0    1.0
+1         0.0       7.0    0.0
+2         5.0       8.0    2.0
+3         7.0       9.0    1.0
+4         8.0       4.0   -1.0
+5         9.0       6.0   -4.0
+6         6.0       1.0   -1.0
+7         6.0       2.0   -1.0
+8         6.0       3.0   -1.0
+
+Add `values` from `df_arc_direct_tree` to `df_arc_positive`
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    1.0  NaN      NaN
+1           0         7    0.0  NaN      NaN
+2           8         4   -1.0  NaN      NaN
+3           8         5    2.0  NaN      NaN
+4           9         6   -4.0  NaN      NaN
+5           6         1   -1.0  NaN      NaN
+6           6         2   -1.0  NaN      NaN
+7           6         3   -1.0  NaN      NaN
+8           9         7    1.0  NaN      NaN
+
+Compare `df_positive` and `df_arc_direct_tree` to classify the arcs in type (`p` or `m`) and the strength in (`strong` or `weak`)
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    1.0    p   strong
+1           0         7    0.0    p     weak
+2           8         4   -1.0    p     weak
+3           8         5    2.0    m     weak
+4           9         6   -4.0    p     weak
+5           6         1   -1.0    p     weak
+6           6         2   -1.0    p     weak
+7           6         3   -1.0    p     weak
+8           9         7    1.0    m     weak
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   4  4.0  1.0  3.0     -1
+2   5  5.0  1.0  3.0     -1
+3   8  4.0  1.0  2.0      3
+df_y_copy
+   id  x  y  z  value
+0   1  1  1  3     -1
+1   2  2  1  3     -1
+2   3  3  1  3     -1
+5   6  2  1  2     -1
+6   7  3  1  2     -1
+8   9  3  1  1      5
+
+---------------
+Counter cicle 9 -&gt; time cicle 0.07696938514709473 seconds
+---------------
+possible_arc
+   start  end
+0      8    3
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         5    1.0    p   strong
+1           0         7    0.0    p     weak
+2           8         4   -1.0    p     weak
+3           8         5    2.0    m     weak
+4           9         6   -4.0    p     weak
+5           6         1   -1.0    p     weak
+6           6         2   -1.0    p     weak
+7           6         3   -1.0    p     weak
+8           9         7    1.0    m     weak
+
+Find the root, the arc from X₀ to Xₘ
+Root
+start_real      0
+end_real        5
+value         NaN
+type          NaN
+strength      NaN
+Name: 0, dtype: object
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         7    NaN  NaN      NaN
+1           8         4    NaN  NaN      NaN
+2           8         5    NaN  NaN      NaN
+3           9         6    NaN  NaN      NaN
+4           6         1    NaN  NaN      NaN
+5           6         2    NaN  NaN      NaN
+6           6         3    NaN  NaN      NaN
+7           9         7    NaN  NaN      NaN
+
+Add the arc from Xₖ to Xₗ
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         7    NaN  NaN      NaN
+1           8         4    NaN  NaN      NaN
+2           8         5    NaN  NaN      NaN
+3           9         6    NaN  NaN      NaN
+4           6         1    NaN  NaN      NaN
+5           6         2    NaN  NaN      NaN
+6           6         3    NaN  NaN      NaN
+7           9         7    NaN  NaN      NaN
+8           8         3    NaN  NaN      NaN
+
+Create `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       7.0    NaN
+1         7.0       9.0    NaN
+2         9.0       6.0    NaN
+3         6.0       1.0    NaN
+4         6.0       2.0    NaN
+5         6.0       3.0    NaN
+6         3.0       8.0    NaN
+7         8.0       4.0    NaN
+8         8.0       5.0    NaN
+
+Add `value` of the outermost nodes in `df_arc_direct_tree`
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       7.0    NaN
+1         7.0       9.0    NaN
+2         9.0       6.0    NaN
+3         6.0       1.0   -1.0
+4         6.0       2.0   -1.0
+5         6.0       3.0    NaN
+6         3.0       8.0    NaN
+7         8.0       4.0   -1.0
+8         8.0       5.0   -1.0
+
+Compute the values of the arcs at the middle and root of the tree based on the sum of the outermost arcs and the node values.
+df_arc_direct_tree
+   start_tree  end_tree  value
+0         0.0       7.0    1.0
+1         7.0       9.0    2.0
+2         9.0       6.0   -3.0
+3         6.0       1.0   -1.0
+4         6.0       2.0   -1.0
+5         6.0       3.0    0.0
+6         3.0       8.0    1.0
+7         8.0       4.0   -1.0
+8         8.0       5.0   -1.0
+
+Add `values` from `df_arc_direct_tree` to `df_arc_positive`
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         7    1.0  NaN      NaN
+1           8         4   -1.0  NaN      NaN
+2           8         5   -1.0  NaN      NaN
+3           9         6   -3.0  NaN      NaN
+4           6         1   -1.0  NaN      NaN
+5           6         2   -1.0  NaN      NaN
+6           6         3    0.0  NaN      NaN
+7           9         7    2.0  NaN      NaN
+8           8         3    1.0  NaN      NaN
+
+Compare `df_positive` and `df_arc_direct_tree` to classify the arcs in type (`p` or `m`) and the strength in (`strong` or `weak`)
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         7    1.0    p   strong
+1           8         4   -1.0    p     weak
+2           8         5   -1.0    p     weak
+3           9         6   -3.0    p     weak
+4           6         1   -1.0    p     weak
+5           6         2   -1.0    p     weak
+6           6         3    0.0    p     weak
+7           9         7    2.0    m     weak
+8           8         3    1.0    m     weak
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   1  1.0  1.0  3.0     -1
+2   2  2.0  1.0  3.0     -1
+3   3  3.0  1.0  3.0     -1
+4   4  4.0  1.0  3.0     -1
+5   5  5.0  1.0  3.0     -1
+6   6  2.0  1.0  2.0     -1
+7   7  3.0  1.0  2.0     -1
+8   8  4.0  1.0  2.0      3
+9   9  3.0  1.0  1.0      5
+df_y_copy
+Empty DataFrame
+Columns: [id, x, y, z, value]
+Index: []
+
+Algoritm completed !!!
+------------------------
+df_arc_positive
+   start_real  end_real  value type strength
+0           0         7    1.0    p   strong
+1           8         4   -1.0    p     weak
+2           8         5   -1.0    p     weak
+3           9         6   -3.0    p     weak
+4           6         1   -1.0    p     weak
+5           6         2   -1.0    p     weak
+6           6         3    0.0    p     weak
+7           9         7    2.0    m     weak
+8           8         3    1.0    m     weak
+
+df_x
+   id    x    y    z  value
+0   0  NaN  NaN  NaN      0
+1   1  1.0  1.0  3.0     -1
+2   2  2.0  1.0  3.0     -1
+3   3  3.0  1.0  3.0     -1
+4   4  4.0  1.0  3.0     -1
+5   5  5.0  1.0  3.0     -1
+6   6  2.0  1.0  2.0     -1
+7   7  3.0  1.0  2.0     -1
+8   8  4.0  1.0  2.0      3
+9   9  3.0  1.0  1.0      5
+
+df_y_copy
+Empty DataFrame
+Columns: [id, x, y, z, value]
+Index: []
+Tiempo de ejecución: 0.7430 segundos
+</code></pre>
+<p>If you assign the result of the main function to a variable like <code>df_pit = main(df_y, df_arc, True)</code>, you can export it to a <code>.csv</code> file using the pandas package.</p>
+<pre><code class="language-python">df_pit = main(df_y, df_arc, True)
+df_pit.to_csv(&quot;df_pit.csv&quot;, index=False)
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
