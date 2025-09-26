@@ -339,6 +339,42 @@ def build_df_arc_direct_tree(df_arc_positive: pd.DataFrame):
     # Create `df_arc_direct_tree`
     df_arc_direct_tree = df_filtered.reset_index(drop=True)
 
+    mask = ~(
+        (
+            df_arc_positive["start_real"].isin(df_arc_direct_tree["start_tree"])
+            & df_arc_positive["end_real"].isin(df_arc_direct_tree["end_tree"])
+        )
+        | (
+            df_arc_positive["end_real"].isin(df_arc_direct_tree["start_tree"])
+            & df_arc_positive["start_real"].isin(df_arc_direct_tree["end_tree"])
+        )
+    )
+    df_arc_positive_filtred = df_arc_positive[mask]
+    # Identify the outermost nodes in the current tree structure
+    last_blocks = set(
+        df_arc_direct_tree[
+            ~(df_arc_direct_tree["end_tree"].isin(df_arc_direct_tree["start_tree"]))
+        ]["end_tree"]
+    )
+    # Add the arcs that are connected to `df_arc_direct_tree`, following the tree’s direction
+    mask = df_arc_positive_filtred["start_real"].isin(last_blocks)
+    new_rows = df_arc_positive_filtred[mask].reset_index(drop=True)
+    new_rows = new_rows[["start_real", "end_real"]]
+    new_rows = new_rows.rename(
+        columns={"start_real": "start_tree", "end_real": "end_tree"}
+    )
+    new_rows["value"] = np.nan
+    df_arc_direct_tree = pd.concat([df_arc_direct_tree, new_rows], ignore_index=True)
+    # Add the arcs that are connected to `df_arc_direct_tree`, not following the tree’s direction.
+    mask = df_arc_positive_filtred["end_real"].isin(last_blocks)
+    new_rows = df_arc_positive_filtred[mask].reset_index(drop=True)
+    new_rows = new_rows[["start_real", "end_real"]]
+    new_rows = new_rows.rename(
+        columns={"start_real": "end_tree", "end_real": "start_tree"}
+    )
+    new_rows["value"] = np.nan
+    df_arc_direct_tree = pd.concat([df_arc_direct_tree, new_rows], ignore_index=True)
+
     while True:
         mask = ~(
             (
@@ -355,6 +391,7 @@ def build_df_arc_direct_tree(df_arc_positive: pd.DataFrame):
         last_blocks = set(
             df_arc_direct_tree[
                 ~(df_arc_direct_tree["end_tree"].isin(df_arc_direct_tree["start_tree"]))
+                & ~(df_arc_direct_tree["start_tree"] == 0)
             ]["end_tree"]
         )
 
